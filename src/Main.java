@@ -32,7 +32,7 @@ public class Main  {
                         for (int aux:pagamento){
                             if(aux==mesas[i]){
                                 System.out.println("Mesa "+(i+1)+" ocupada");
-                                mesaOcupada.add(i+1);
+
                                 v=false;
                             }
                         }
@@ -71,6 +71,7 @@ public class Main  {
                         }
                     if(cond!=1){
                         pagamento.add(numeroMesa);
+                        mesaOcupada.add(numeroMesa);
                     }
                     do{
                         condPedido=1;
@@ -135,6 +136,15 @@ public class Main  {
                     break;
                 case 4:
                     boolean teste = false;
+                    if(pagamento.size()<1){
+                        System.out.println("Não existem pagamentos pendentes! ");
+                        break;
+                    }
+                    System.out.print("A(s) mesa(s) ");
+                    for(int aux:pagamento){
+                        System.out.print(" ["+aux+"] ");
+                    }
+                    System.out.println("\nTem pagamentos pendentes!");
                     System.out.println("Digite o numero da mesa que deseja realizar o pagamento: ");
                     numeroMesa=leia.nextInt();
                     for(int aux:atendimento){
@@ -155,7 +165,7 @@ public class Main  {
                             historico.historico(numeroMesa,totalMesa);
                             consultar.realizarPagamento(listaPedido,numeroMesa);
                             pagamento.remove(index);
-                            //mesaOcupada.remove(numeroMesa);
+                            mesaOcupada.remove(index);
                             verif2=1;
                             break;
                         }
@@ -169,7 +179,7 @@ public class Main  {
                     if(pagamento.size()>0){
                         System.out.print("\nImposivel finalizar. A(s) mesa(s): ");
                         for (int aux:pagamento) System.out.print("["+aux+"]");
-                        System.out.println("  ainda não concluiu o pagamento!");
+                        System.out.println("  ainda tem pagamentos pendentes!");
                         opcao=0;
                         break;
                     }
