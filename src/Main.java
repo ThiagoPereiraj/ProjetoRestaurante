@@ -3,12 +3,8 @@ import java.util.Scanner;
 
 public class Main  {
     public static void main(String[] args) {
-        Scanner leia=new Scanner(System.in);
+        Scanner sc=new Scanner(System.in);
         int condPedido,opcao;
-
-        Comanda consultar=new Comanda(0,0);
-        Historico historico=new Historico(0,0);
-        Menu menu=new Menu();
         ArrayList<Mesa> listaPedido = new ArrayList<>();
         ArrayList<Integer> atendimento = new ArrayList<>();
         ArrayList<Integer> pagamento = new ArrayList<>();
@@ -20,7 +16,7 @@ public class Main  {
 
         do{
             System.out.println("O que deseja fazer:\n1.Atender mesas\n2.Entregar pedidos\n3.Imprimir comanda\n4.Realizar pagamentos\n5.Finalizar programa");
-            opcao=leia.nextInt();
+            opcao=sc.nextInt();
             int numeroMesa;
             switch (opcao){
                 case 0:
@@ -45,7 +41,7 @@ public class Main  {
                     do {
                         condMesa=false;
                         System.out.println("Digite o numero da mesa que deseja atender:");
-                        numeroMesa=leia.nextInt();
+                        numeroMesa=sc.nextInt();
                         if(numeroMesa>mesas.length){
                             System.out.println("A mesa "+numeroMesa+" não existe! ");
                             condMesa=true;
@@ -53,7 +49,7 @@ public class Main  {
                         for(int aux:mesaOcupada){
                             if(aux==numeroMesa){
                                 System.out.println("A mesa "+numeroMesa+" está ocupada deseja adicionar mais itens a comanda?\n1. Sim\n2. Não");
-                                int op = leia.nextInt();
+                                int op = sc.nextInt();
                                 if(op==1){
                                     break;
                                 }
@@ -75,16 +71,16 @@ public class Main  {
                     }
                     do{
                         condPedido=1;
-                        menu.imprimirMenu();
+                        Menu.imprimirMenu();
                         int id;
                         do{
                             System.out.print("Digite o numero do pedido desejado: ");
-                            id=leia.nextInt();
+                            id=sc.nextInt();
                             if(id>10||id<1)System.out.println("Pedido inválido!!");
                         }while(id>10||id<1);
 
                         System.out.print("Digite a quantidade desejada: ");
-                        int qtd= leia.nextInt();
+                        int qtd= sc.nextInt();
                         Mesa pedido=new Mesa(id,qtd,numeroMesa);
 
                         for (int i=0;i<=listaPedido.size()-1;i++){
@@ -103,7 +99,7 @@ public class Main  {
                         }
                         do{
                             System.out.println("Deseja algo mais?\n1.Sim\n2.Não");
-                            condPedido=leia.nextInt();
+                            condPedido=sc.nextInt();
                             if(condPedido>2||condPedido<1) System.out.println("Opção inválida");
                         }while (condPedido>2||condPedido<1);
 
@@ -115,17 +111,17 @@ public class Main  {
                     break;
                 case 2:
                     if (atendimento.size()>0) {
-                        consultar.entregaPedido(atendimento);
+                        Pedido.entregaPedido(atendimento);
                         atendimento.clear();
                     }else System.out.println("Não existem entregas pendentes\n\n");
                     break;
                 case 3:
                     System.out.println("Digite o numero da mesa que deseja consultar a comanda: ");
-                    numeroMesa=leia.nextInt();
+                    numeroMesa=sc.nextInt();
                     int verif=0;
                     for (int aux:pagamento){
                         if(aux==numeroMesa){
-                            consultar.imprimirComanda(listaPedido,numeroMesa);
+                            Comanda.imprimirComanda(listaPedido,numeroMesa);
                             verif=1;
                             break;
                         }
@@ -146,7 +142,7 @@ public class Main  {
                     }
                     System.out.println("\nTem pagamentos pendentes!");
                     System.out.println("Digite o numero da mesa que deseja realizar o pagamento: ");
-                    numeroMesa=leia.nextInt();
+                    numeroMesa=sc.nextInt();
                     for(int aux:atendimento){
                         if(aux==numeroMesa){
                             System.out.println("A mesa: "+numeroMesa+" ainda possui entregas pendentes");
@@ -161,9 +157,15 @@ public class Main  {
                     int verif2=0,index=0;
                     for (int aux:pagamento){
                         if(aux==numeroMesa){
-                            double totalMesa=consultar.imprimirComanda(listaPedido,numeroMesa);
-                            historico.historico(numeroMesa,totalMesa);
-                            consultar.realizarPagamento(listaPedido,numeroMesa);
+                            double totalMesa=Comanda.imprimirComanda(listaPedido,numeroMesa);
+                            Historico.historico(numeroMesa,totalMesa);
+                            int option;
+                            do{
+                                System.out.println("Qual a forma de Pagamento: \n1. Pix\n2. Cartão\n3. Dinheiro");
+                                option=sc.nextInt();
+                                if(option>3||option<1) System.out.println("Opção Invalida");
+                            }while (option>3||option<1);
+                            Comanda.realizarPagamento(listaPedido,numeroMesa);
                             pagamento.remove(index);
                             mesaOcupada.remove(index);
                             verif2=1;
@@ -184,13 +186,14 @@ public class Main  {
                         break;
                     }
                         System.out.println("Finalizando...");
-                        historico.inprimirHistorico();
+                        Historico.inprimirHistorico();
                     break;
                 default:
                     System.out.println("Opção inválida");
             }
 
         }while (opcao!=5);
+        sc.close();
     }
 
 }

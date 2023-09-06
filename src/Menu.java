@@ -1,5 +1,5 @@
 public class Menu {
-    public void imprimirMenu() {
+    public static void imprimirMenu() {
         System.out.println("------------------------CARDÁPIO--------------------------\n");
         System.out.println("Sanduíches:\n");
         System.out.println("\t1. CHEESEBURGUER.........................................R$ 15,00");

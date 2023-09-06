@@ -8,8 +8,8 @@ public class Historico {
         this.numMesa = numMesa;
         this.totalMesa = totalMesa;
     }
-    ArrayList<Historico> historico=new ArrayList<>();
-    public void historico(int numMesa,double totalMesa){
+    static ArrayList<Historico> historico=new ArrayList<>();
+    public static void historico(int numMesa,double totalMesa){
         int cond=0;
         Historico mesa=new Historico(numMesa,totalMesa);
         for (int i=0;i<=historico.size()-1;i++){
@@ -23,7 +23,7 @@ public class Historico {
         }
         if (cond!=2)historico.add(mesa);
     }
-    public void inprimirHistorico(){
+    public static void inprimirHistorico(){
         System.out.println("\nFaturamento do dia:");
         double totalDia=0;
         for (int i=0;i<=historico.size()-1;i++){

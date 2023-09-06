@@ -7,7 +7,7 @@ public abstract class Pedido {
         this.setId(id);
         this.setQtdPedido(qtdPedido);
     }
-    public void entregaPedido(ArrayList<Integer> atendimento ){
+    public static void entregaPedido(ArrayList<Integer> atendimento ){
         for (int m:atendimento) {
             System.out.println("\nPedido mesa "+m+": Pronto!!");
             System.out.println("Pedido mesa "+m+": Entregue!!\n\n");

@@ -1,15 +1,13 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Comanda extends Pedido {
-    Scanner leia=new Scanner(System.in);
+public class Comanda extends Pedido {   
 
     public Comanda(int id, int qtdPedido) {
         super(id, qtdPedido);
     }
 
 
-    public double imprimirComanda(ArrayList<Mesa> listaPedido,int numeroMesa){
+    public static double imprimirComanda(ArrayList<Mesa> listaPedido,int numeroMesa){
         double totalMesa=0;
         System.out.println("Consumo:\t\t\t\t\tQuantidade:\t\t\t\tTotal:\n");
         for (int i=0;i<=listaPedido.size()-1;i++){
@@ -24,7 +22,7 @@ public class Comanda extends Pedido {
         System.out.println("\nTotal a pagar.......................................R$ "+totalMesa+"\n\n");
         return totalMesa;
     }
-    public double calculaTotal(int id, int qtd){
+    public static double calculaTotal(int id, int qtd){
         double preco=0;
         switch (id) {
             case 1 -> preco = 15;
@@ -41,7 +39,7 @@ public class Comanda extends Pedido {
         return preco * qtd;
 
     }
-    public String tranformarId(int id){
+    public static String tranformarId(int id){
         String nomeId=" ";
         switch (id){
             case 1 -> nomeId = "CHEESEBURGUER    ";
@@ -58,21 +56,14 @@ public class Comanda extends Pedido {
         }
         return nomeId;
     }
-    public void realizarPagamento(ArrayList<Mesa> listaPedido,int numeroMesa){
+    public static void realizarPagamento(ArrayList<Mesa> listaPedido,int numeroMesa){
 
-        int opcao;
-        do{
-            System.out.println("Qual a forma de Pagamento: \n1. Pix\n2. Cartão\n3. Dinheiro");
-            opcao=leia.nextInt();
-            if(opcao>3||opcao<1) System.out.println("Opção Invalida");
-        }while (opcao>3||opcao<1);
+        
 
         for (int i=0;i<=listaPedido.size()-1;i++){
             if(listaPedido.get(i).getNumeroMesa()==numeroMesa){
                 listaPedido.remove(i);
-
                     i--;
-
             }
 
         }
